@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Smajlici"
-        xmlns:vm="clr-namespace:Smajlici.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525"
         >
@@ -24,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-              MinWidth="200" MinHeight="200" Background="AliceBlue">
+              MinWidth="200" MinHeight="200"  Background="AliceBlue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -36,17 +35,26 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Image Grid.Column="0" Grid.Row="0"/>
-            <Image Grid.Column="1" Grid.Row="0"/>
-            <Image Grid.Column="2" Grid.Row="0"/>
+            <Image Grid.Column="0" Grid.Row="0"
+                   Source="{Binding Path=LTImageSource}"/>
+            <Image Grid.Column="1" Grid.Row="0"
+                   Source="{Binding Path=TImageSource}"/>
+            <Image Grid.Column="2" Grid.Row="0"
+                   Source="{Binding Path=RTImageSource}"/>
 
-            <Image Grid.Column="0" Grid.Row="1"/>
-            <Image Grid.Column="1" Grid.Row="1"/>
-            <Image Grid.Column="2" Grid.Row="1"/>
+            <Image Grid.Column="0" Grid.Row="1"
+                   Source="{Binding Path=LMImageSource}"/>
+            <Image Grid.Column="1" Grid.Row="1"
+                   Source="{Binding Path=MImageSource}"/>
+            <Image Grid.Column="2" Grid.Row="1"
+                   Source="{Binding Path=RMImageSource}"/>
 
-            <Image Grid.Column="0" Grid.Row="2"/>
-            <Image Grid.Column="1" Grid.Row="2"/>
-            <Image Grid.Column="2" Grid.Row="2"/>
+            <Image Grid.Column="0" Grid.Row="2"
+                   Source="{Binding Path=LBImageSource}"/>
+            <Image Grid.Column="1" Grid.Row="2"
+                   Source="{Binding Path=BImageSource}"/>
+            <Image Grid.Column="2" Grid.Row="2"
+                   Source="{Binding Path=RBImageSource}"/>
 
         </Grid>
         
