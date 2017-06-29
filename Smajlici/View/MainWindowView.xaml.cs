@@ -20,9 +20,16 @@ namespace Smajlici
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly Smajlici.ViewModel.MainWindowViewModel vm;
+
         public MainWindow()
         {
+           
             InitializeComponent();
+            vm = new ViewModel.MainWindowViewModel();
+            this.DataContext = vm;
         }
+
+        
     }
 }
