@@ -18,7 +18,7 @@ namespace Smajlici.ViewModel
         
         public MainWindowViewModel()
         {
-            LoadImage((new Uri("pack://application:,,,/Img/noImage.PNG")));
+            LoadImage((new Uri("pack://application:,,,/Img/noImage.PNG")),true);
         }
 
         public bool ImageLoaded { get; set; } = false;
@@ -153,9 +153,9 @@ namespace Smajlici.ViewModel
 
         #endregion
 
-        public void LoadImage(Uri imageUri)
+        public void LoadImage(Uri imageUri,bool isDefault)
         {
-            ImageParts = new SplittedImage(imageUri);
+            ImageParts = new SplittedImage(imageUri,isDefault);
         }
 
 

@@ -8,15 +8,20 @@ namespace Smajlici
 {
     struct ImageChunkType
     {
-        public ImageChunkColor Color;
-        public ImageChunkFace Face;
-        public ImageChunk Neighbour;
+        public ImageChunkColor Color { get; private set; }
+        public ImageChunkFace Face { get; private set; }
+        private ImageChunk Neighbour;
 
-        public ImageChunkType(ImageChunkColor color, ImageChunkFace face, ImageChunk neighbour)
+        public ImageChunkType(ImageChunkColor color, ImageChunkFace face)
         {
             Color = color;
             Face = face;
-            Neighbour = neighbour;
+            Neighbour = null;
+        }
+
+        public void SetNeighbour(ImageChunkSide side, ImageChunk chunk)
+        {
+            Neighbour = chunk;
         }
     }
 
@@ -39,7 +44,8 @@ namespace Smajlici
         Green,
         Red,
         Yellow,
-        Blue
+        Blue,
+        Black
     }
 
     public enum ImageChunkRotation

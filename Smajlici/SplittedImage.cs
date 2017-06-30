@@ -25,9 +25,9 @@ namespace Smajlici
             RightBottom = 8
         }
 
-        public SplittedImage(Uri image)
+        public SplittedImage(Uri image,bool isDefault)
         {
-            _imageChunks = ImageSplitter.SplitImage(image);
+            _imageChunks = ImageSplitter.SplitImage(image,isDefault);
 
         }
 
