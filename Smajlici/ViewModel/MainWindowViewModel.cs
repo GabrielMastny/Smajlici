@@ -32,15 +32,15 @@ namespace Smajlici.ViewModel
             {
                 _imageParts = value;
                 OnPropertyChanged("ImageParts");
-                LTImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftTop);
-                TImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Top);
-                RTImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightTop);
-                LMImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftMiddle);
-                MImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Middle);
-                RMImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightMiddle);
-                LBImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftBottom);
-                BImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Bottom);
-                RBImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightBottom);
+                LTImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftTop);
+                TImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Top);
+                RTImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightTop);
+                LMImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftMiddle);
+                MImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Middle);
+                RMImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightMiddle);
+                LBImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftBottom);
+                BImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Bottom);
+                RBImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightBottom);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _lMImageSource;
         public BitmapImage LMImageSource
         {
-            get => _lMImageSource ?? (_lMImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftMiddle));
+            get => _lMImageSource ?? (_lMImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftMiddle));
             set
             {
                 _lMImageSource = value;
@@ -60,7 +60,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _mImageSource;
         public BitmapImage MImageSource
         {
-            get => _mImageSource ?? (_mImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Middle));
+            get => _mImageSource ?? (_mImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Middle));
             set
             {
                 _mImageSource = value;
@@ -71,7 +71,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _rMImageSource;
         public BitmapImage RMImageSource
         {
-            get => _rMImageSource ?? (_rMImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightMiddle));
+            get => _rMImageSource ?? (_rMImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightMiddle));
             set
             {
                 _rMImageSource = value;
@@ -85,7 +85,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _lTImageSource;
         public BitmapImage LTImageSource
         {
-            get => _lTImageSource ?? (_lTImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftTop));
+            get => _lTImageSource ?? (_lTImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftTop));
             set
             {
                 _lTImageSource = value;
@@ -96,7 +96,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _tImageSource;
         public BitmapImage TImageSource
         {
-            get => _tImageSource ?? (_tImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Top));
+            get => _tImageSource ?? (_tImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Top));
             set
             {
                 _tImageSource = value;
@@ -107,7 +107,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _rTImageSource;
         public BitmapImage RTImageSource
         {
-            get => _rTImageSource ?? (_rTImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightTop));
+            get => _rTImageSource ?? (_rTImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightTop));
             set
             {
                 _rTImageSource = value;
@@ -120,7 +120,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _lBImageSource;
         public BitmapImage LBImageSource
         {
-            get => _lBImageSource ?? (_lBImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.LeftBottom));
+            get => _lBImageSource ?? (_lBImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftBottom));
             set
             {
                 _lBImageSource = value;
@@ -131,7 +131,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _bImageSource;
         public BitmapImage BImageSource
         {
-            get => _bImageSource ?? (_bImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.Bottom));
+            get => _bImageSource ?? (_bImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.Bottom));
             set
             {
                 _bImageSource = value;
@@ -142,7 +142,7 @@ namespace Smajlici.ViewModel
         private BitmapImage _rBImageSource;
         public BitmapImage RBImageSource
         {
-            get => _rBImageSource ?? (_rBImageSource = ImageParts.GetImagePart(SplittedImage.ImagePosittion.RightBottom));
+            get => _rBImageSource ?? (_rBImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightBottom));
             set
             {
                 _rBImageSource = value;

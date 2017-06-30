@@ -16,7 +16,7 @@ namespace Smajlici
     static class ImageSplitter
     {
 
-        public static BitmapImage[] SplitImage(Uri wholeImage)
+        public static ImageChunk[] SplitImage(Uri wholeImage)
         {
 
             Bitmap BM = CreateBM(wholeImage);
@@ -24,26 +24,27 @@ namespace Smajlici
 
 
             int index = 0;
-            BitmapImage[] splittedImage = new BitmapImage[9];
+            ImageChunk[] splittedImage = new ImageChunk[9];
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    splittedImage[index++] = ConvToBTI(BM.Clone(new Rectangle(j * partSize, i * partSize, partSize, partSize),
-                        BM.PixelFormat));
+                    Bitmap BMChunk = BM.Clone(new Rectangle(j * partSize, i * partSize, partSize, partSize),
+                        BM.PixelFormat);
+                    splittedImage[index++] = new ImageChunk(index, ConvToBMI(BMChunk), null); //TODO ChunkTypes
                 }
             }
             return splittedImage;
 
         }
 
-        private static BitmapImage ConvToBTI(Bitmap bitmap)
+        private static BitmapImage ConvToBMI(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {
                 bitmap.Save(memory, ImageFormat.Png);
                 memory.Position = 0;
-
+                
                 var bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
                 bitmapImage.StreamSource = memory;

@@ -29,12 +29,19 @@ namespace Smajlici.Commands
             Uri imgUri;
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
+            openFileDialog.FileOk += OpenFileDialog_FileOk;
             if (openFileDialog.ShowDialog() == true)
             {
                 imgUri =new Uri(openFileDialog.FileName);
                 ((Smajlici.ViewModel.MainWindowViewModel) parameter).LoadImage(imgUri);
             }
 
+        }
+
+        private void OpenFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            
         }
         #endregion
     }

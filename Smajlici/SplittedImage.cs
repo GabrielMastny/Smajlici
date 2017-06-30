@@ -10,7 +10,7 @@ namespace Smajlici
 {
     class SplittedImage
     {
-        private BitmapImage[] _splittedImage;
+        private ImageChunk[] _imageChunks;
 
         public enum ImagePosittion
         {
@@ -27,13 +27,13 @@ namespace Smajlici
 
         public SplittedImage(Uri image)
         {
-            _splittedImage = ImageSplitter.SplitImage(image);
+            _imageChunks = ImageSplitter.SplitImage(image);
 
         }
 
-        public BitmapImage GetImagePart(ImagePosittion pos)
+        public BitmapImage GetImageChunkBMI(ImagePosittion pos)
         {
-            return _splittedImage[((int) pos)];
+            return _imageChunks[((int)pos)].ChunkImage;
         }
     }
 }

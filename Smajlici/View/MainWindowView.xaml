@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-              MinWidth="200" MinHeight="200"  Background="AliceBlue">
+              MinWidth="200" MinHeight="200" MaxWidth="735" MaxHeight="735" Background="AliceBlue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
