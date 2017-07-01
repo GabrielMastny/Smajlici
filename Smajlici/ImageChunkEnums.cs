@@ -10,7 +10,7 @@ namespace Smajlici
     {
         public ImageChunkColor Color { get; private set; }
         public ImageChunkFace Face { get; private set; }
-        private ImageChunk Neighbour;
+        private ImagePart Neighbour;
 
         public ImageChunkType(ImageChunkColor color, ImageChunkFace face)
         {
@@ -19,13 +19,13 @@ namespace Smajlici
             Neighbour = null;
         }
 
-        public void SetNeighbour(ImageChunkSide side, ImageChunk chunk)
+        public void SetNeighbour(ImagePartSide side, ImagePart chunk)
         {
             Neighbour = chunk;
         }
     }
 
-    public enum ImageChunkSide
+    public enum ImagePartSide
     {
         Left = 0,
         Top = 1,

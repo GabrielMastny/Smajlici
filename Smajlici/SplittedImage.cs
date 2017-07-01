@@ -10,7 +10,7 @@ namespace Smajlici
 {
     class SplittedImage
     {
-        private ImageChunk[] _imageChunks;
+        private ImagePart[] _imageChunks;
 
         public enum ImagePosittion
         {

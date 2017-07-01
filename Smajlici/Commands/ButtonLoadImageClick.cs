@@ -1,11 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -27,14 +21,21 @@ namespace Smajlici.Commands
         }
         public void Execute(object parameter)
         {
-            Uri imgUri;
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Vše podporované (*.png, *jpg)|*.png ;*.jpg|PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
+            openFileDialog.Filter = "Vše podporované (*.png, *jpg)|*.png;*.jpg|PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
             openFileDialog.FileOk += OpenFileDialog_FileOk;
             if (openFileDialog.ShowDialog() == true)
             {
-                imgUri =new Uri(openFileDialog.FileName);
-                ((Smajlici.ViewModel.MainWindowViewModel) parameter).LoadImage(imgUri,false);
+                var imgUri = new Uri(openFileDialog.FileName);
+                try
+                {
+                    ((ViewModel.MainWindowViewModel)parameter).LoadImage(imgUri, false);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                
             }
 
         }
@@ -43,10 +44,15 @@ namespace Smajlici.Commands
         {
             BitmapDecoder decoder = BitmapDecoder.Create(new Uri( ((OpenFileDialog)sender).FileName ), BitmapCreateOptions.None, BitmapCacheOption.None);
             BitmapFrame frame = decoder.Frames[0];
-            if (frame.Width != frame.Height)
+            if ((int)frame.Width != (int)frame.Height)
             {
                 e.Cancel = true;
                 MessageBox.Show("Obrázek musí mít stejnou šířku a výšku.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+            else if (frame.Width < 400)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Obrázek je příliš malý.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
             
 
