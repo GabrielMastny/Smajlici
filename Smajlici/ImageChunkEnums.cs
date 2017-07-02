@@ -6,24 +6,7 @@ using System.Threading.Tasks;
 
 namespace Smajlici
 {
-    struct ImageChunkType
-    {
-        public ImageChunkColor Color { get; private set; }
-        public ImageChunkFace Face { get; private set; }
-        private ImagePart Neighbour;
-
-        public ImageChunkType(ImageChunkColor color, ImageChunkFace face)
-        {
-            Color = color;
-            Face = face;
-            Neighbour = null;
-        }
-
-        public void SetNeighbour(ImagePartSide side, ImagePart chunk)
-        {
-            Neighbour = chunk;
-        }
-    }
+    
 
     public enum ImagePartSide
     {

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Smajlici.ViewModel;
 
@@ -16,7 +12,7 @@ namespace Smajlici.Commands
         {
             if (parameter != null)
             {
-                return (((MainWindowViewModel)parameter).ImageLoaded) ? true : false;
+                return (((MainWindowViewModel)parameter).ImageLoaded);
             }
             return true;
 
@@ -28,7 +24,7 @@ namespace Smajlici.Commands
         }
         public void Execute(object parameter)
         {
-
+            ((MainWindowViewModel) parameter).SolveImage();
 
         }
         #endregion

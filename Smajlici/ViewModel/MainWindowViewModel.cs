@@ -156,6 +156,19 @@ namespace Smajlici.ViewModel
         public void LoadImage(Uri imageUri,bool isDefault)
         {
             ImageParts = new SplittedImage(imageUri,isDefault);
+            if (!isDefault)
+            {
+                ImageLoaded = true;
+            }
+        }
+
+        public void SolveImage()
+        {
+            _imageParts.RotateImagePart(SplittedImage.ImagePosittion.LeftBottom);
+            Console.WriteLine($"{_imageParts.GetImagePart(SplittedImage.ImagePosittion.LeftBottom).Rotation}");
+            _imageParts.MoveImagePart(SplittedImage.ImagePosittion.LeftTop, SplittedImage.ImagePosittion.RightBottom);
+            LTImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.LeftTop);
+            RBImageSource = ImageParts.GetImageChunkBMI(SplittedImage.ImagePosittion.RightBottom);
         }
 
 

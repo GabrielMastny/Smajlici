@@ -12,7 +12,7 @@ namespace Smajlici
         public int Id { private set; get; }
         public ImageChunkRotation Rotation;
         public BitmapImage ChunkImage { private set; get; }
-        public ImageChunkType[] ImageChunkTypes;
+        private ImageChunkType[] ImageChunkTypes;
 
         public ImagePart(int id, BitmapImage image,ImageChunkType[] types)
         {
@@ -22,6 +22,10 @@ namespace Smajlici
             ImageChunkTypes = types;
         }
 
+        public ImageChunkType GetImageChunkType(ImagePartSide imagePartSide)
+        {
+            return ImageChunkTypes[(int)imagePartSide];
+        }
        
 
     }
