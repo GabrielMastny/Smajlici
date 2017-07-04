@@ -66,9 +66,11 @@
     </Compile>
     <Compile Include="Commands\ButtonLoadImageClick.cs" />
     <Compile Include="Commands\ButtonSolveClick.cs" />
-    <Compile Include="ImageChunkType.cs" />
+    <Compile Include="Commands\ImageClick.cs" />
+    <Compile Include="Commands\ImageDoubleClick.cs" />
+    <Compile Include="Converter\ButtonConverter.cs" />
+    <Compile Include="ImageChunk.cs" />
     <Compile Include="ImagePart.cs" />
-    <Compile Include="ImageChunkEnums.cs" />
     <Compile Include="ImageSolver.cs" />
     <Compile Include="ImageSplitter.cs" />
     <Compile Include="SplittedImage.cs" />

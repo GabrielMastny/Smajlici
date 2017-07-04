@@ -71,7 +71,7 @@ namespace Smajlici
             }
             for (int i = 0; i < 4; i++)
             {
-                _imageParts[(int)position].GetImageChunkType((ImagePartSide)i).SetNeighbour(neighbours[i]);
+                _imageParts[(int)position].GetImageChunk((ImagePartSide)i).SetNeighbour(neighbours[i]);
             }
 
         }
@@ -81,7 +81,7 @@ namespace Smajlici
             ImagePart[] neighbours = new ImagePart[4];
             for (int i = 0; i < 4; i++)
             {
-                neighbours[i] = _imageParts[(int) position].GetImageChunkType((ImagePartSide) i).Neighbour;
+                neighbours[i] = _imageParts[(int) position].GetImageChunk((ImagePartSide) i).Neighbour;
             }
             return neighbours;
         }
@@ -91,17 +91,18 @@ namespace Smajlici
             ImagePart imagePart = _imageParts[(int) position];
             ImagePart[] neighbours = GetNeighbours(position);
 
-            for (int i = 3; i < 0; i--)
-            {
-                _imageParts[(int) position].GetImageChunkType((ImagePartSide) i).SetNeighbour(neighbours[i - 1]);
-            }
-            _imageParts[(int)position].GetImageChunkType((ImagePartSide)0).SetNeighbour(neighbours[3]);
+            imagePart.RotateChunks();
 
-            if (imagePart.Rotation == ImageChunkRotation.D270)
+            for (int i = 0; i <4; i++)
             {
-                imagePart.Rotation = ImageChunkRotation.D0;
+                imagePart.GetImageChunk((ImagePartSide) i).SetNeighbour(neighbours[i]);
             }
-            else imagePart.Rotation++;
+
+            if (imagePart.Rotation == ImagePartRotation.D270)
+            {
+                imagePart.Rotation = ImagePartRotation.D0;
+            }
+            else imagePart.Rotation +=90;
         }
 
         public void MoveImagePart(ImagePosittion from, ImagePosittion to)
@@ -120,7 +121,7 @@ namespace Smajlici
                 {
                     if (surroundingNeighbours[i] != null)
                     {
-                        surroundingNeighbours[i].GetImageChunkType(opositeOrder[i]).SetNeighbour(newNeighbour);
+                        surroundingNeighbours[i].GetImageChunk(ReversedValue((ImagePartSide)i)).SetNeighbour(newNeighbour);
                     }
                 }
             }
@@ -134,5 +135,50 @@ namespace Smajlici
             SetNeighbours(from);
             SetNeighbours(to);
         }
+
+        public bool CheckImageCorectness()
+        {
+            bool result = true;
+            foreach (var imagePart in _imageParts)
+            {
+                for (int i = 0; i < 4; i++)
+                {    
+                    ImageChunk first = imagePart.GetImageChunk((ImagePartSide) i);
+                    if (first.Neighbour != null)
+                    {
+                        ImageChunk second = first.Neighbour.GetImageChunk(ReversedValue((ImagePartSide) i));
+
+                        result = (first.Color == second.Color && first.Face != second.Face);
+                        if (!result) 
+                        {
+                            return false;
+                        }
+                    }
+                        
+                }
+            }
+            return true;
+        }
+
+        private ImagePartSide ReversedValue(ImagePartSide partSide)
+        {
+            ImagePartSide result;
+            switch (partSide)
+            {
+                case ImagePartSide.Left: result = ImagePartSide.Right;
+                    break;
+                case ImagePartSide.Top: result = ImagePartSide.Bottom;
+                    break;
+                case ImagePartSide.Right: result = ImagePartSide.Left;
+                    break;
+                case ImagePartSide.Bottom: result = ImagePartSide.Top;
+                    break;
+                default: result = ImagePartSide.Top;
+                    break;
+            }
+            return result;
+        }
+
+       
     }
 }

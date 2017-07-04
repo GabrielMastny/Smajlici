@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Smajlici"
         mc:Ignorable="d"
+        xmlns:conv="clr-namespace:Smajlici.Converter"
         Title="MainWindow" Height="350" Width="525" 
         MinWidth="{Binding ElementName=GridMain, Path=ActualWidth}" MinHeight="{Binding ElementName=GridMain, Path=ActualHeight}"
         >
+    <Window.Resources>
+        <conv:ButtonConverter x:Name="MyConverter" x:Key="Converter"/>
+    </Window.Resources>
     <Grid Margin="20" Name="GridMain">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -32,27 +36,263 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <Image Grid.Column="0" Grid.Row="0" Margin="1" 
-                   Source="{Binding Path=LTImageSource}"/>
-            <Image Grid.Column="1" Grid.Row="0" Margin="1"
-                   Source="{Binding Path=TImageSource}"/>
-            <Image Grid.Column="2" Grid.Row="0" Margin="1"
-                   Source="{Binding Path=RTImageSource}"/>
 
-            <Image Grid.Column="0" Grid.Row="1" Margin="1"
-                   Source="{Binding Path=LMImageSource}"/>
-            <Image Grid.Column="1" Grid.Row="1" Margin="1"
-                   Source="{Binding Path=MImageSource}"/>
-            <Image Grid.Column="2" Grid.Row="1" Margin="1"
-                   Source="{Binding Path=RMImageSource}"/>
+            <Button Name="LT" Grid.Column="0" Grid.Row="0" Margin="1">
+                
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LT" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
 
-            <Image Grid.Column="0" Grid.Row="2" Margin="1"
-                   Source="{Binding Path=LBImageSource}"/>
-            <Image Grid.Column="1" Grid.Row="2" Margin="1"
-                   Source="{Binding Path=BImageSource}"/>
-            <Image Grid.Column="2" Grid.Row="2" Margin="1"
-                   Source="{Binding Path=RBImageSource}"/>
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LT" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+
+
+                <Image Source="{Binding Path=LTImageSource}" RenderTransformOrigin=".5,.5">
+                    <Image.LayoutTransform>
+                        <RotateTransform x:Name="AnimatedRotateTransform" Angle="{Binding Path=LTImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+            <Button Name="T" Grid.Column="1" Grid.Row="0" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="T" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="T" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=TImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=TImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+            <Button Name="RT" Grid.Column="2" Grid.Row="0" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RT" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RT" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=RTImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=RTImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+
+            <Button Name="LM" Grid.Column="0" Grid.Row="1" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LM" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LM" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=LMImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=LMImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+            <Button Name="M" Grid.Column="1" Grid.Row="1" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="M" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="M" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=MImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=MImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+            <Button Name="RM" Grid.Column="2" Grid.Row="1" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RM" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RM" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image  Source="{Binding Path=RMImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=RMImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+
+            <Button Name="LB" Grid.Column="0" Grid.Row="2" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LB" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="LB" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=LBImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=LBImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+            <Button Name="B" Grid.Column="1" Grid.Row="2" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="B" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="B" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image Source="{Binding Path=BImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=BImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+
+            <Button Name="RB" Grid.Column="2" Grid.Row="2" Margin="1">
+                <Button.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=CmdImageDoubleClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RB" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Path=CmdImageClick}" >
+                        <MouseBinding.CommandParameter>
+                            <MultiBinding Converter="{StaticResource Converter}">
+                                <Binding />
+                                <Binding ElementName="RB" Path="Name"/>
+                            </MultiBinding>
+                        </MouseBinding.CommandParameter>
+
+                    </MouseBinding>
+                </Button.InputBindings>
+                <Image  Source="{Binding Path=RBImageSource}">
+                    <Image.LayoutTransform>
+                        <RotateTransform  Angle="{Binding Path=RBImageAngle}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Button>
+                  
 
         </Grid>
         

@@ -74,35 +74,40 @@ namespace Smajlici
             return image;
         }
 
-        private static ImageChunkType[] PixelRecognize(Bitmap bitmap)
+        private static ImageChunk[] PixelRecognize(Bitmap bitmap)
         {
-            ImageChunkType[] chunkType = new ImageChunkType[4];
+            ImageChunk[] chunkType = new ImageChunk[4];
             Point[] colorRelativeSamples = {new Point(29, 49), new Point(2, 74), new Point(2, 24)};
             Point[] eyeRelativeSamples = { new Point(15, 58), new Point(15, 40) };
             Point[] smileRelativeSamples = { new Point(10, 69), new Point(7, 29), new Point(24, 49) };
 
             for (int i = 0; i < chunkType.Length; i++)
             {
-                ImageChunkColor? iColor = null;
-                ImageChunkFace? iFace = null;
+                ImageChunk.ImageChunkColor? iColor = null;
+                ImageChunk.ImageChunkFace? iFace = null;
+
+                if (i == 3)
+                {
+                    Console.Write("");
+                }
 
                 iColor = CheckColorFromSamples(colorRelativeSamples, bitmap);
-                if (iColor != ImageChunkColor.Black && iColor != null)
+                if (iColor != ImageChunk.ImageChunkColor.Black && iColor != null)
                 {
-                    if (CheckColorFromSamples(smileRelativeSamples,bitmap) == ImageChunkColor.Black)
+                    if (CheckColorFromSamples(smileRelativeSamples,bitmap) == ImageChunk.ImageChunkColor.Black)
                     {
-                        iFace = ImageChunkFace.Smile;
+                        iFace = ImageChunk.ImageChunkFace.Smile;
                     }
-                    else if (CheckColorFromSamples(eyeRelativeSamples,bitmap) == ImageChunkColor.Black)
+                    else if (CheckColorFromSamples(eyeRelativeSamples,bitmap) == ImageChunk.ImageChunkColor.Black)
                     {
-                        iFace = ImageChunkFace.Eyes;
+                        iFace = ImageChunk.ImageChunkFace.Eyes;
                     }
 
                 }
 
                 if (iColor != null && iFace != null)
                 {
-                    chunkType[i] = new ImageChunkType(iColor.Value, iFace.Value);
+                    chunkType[i] = new ImageChunk(iColor.Value, iFace.Value);
                     bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
                 }
                 else
@@ -115,32 +120,32 @@ namespace Smajlici
             return chunkType;
         }
 
-        private static ImageChunkColor? ToColorEnum(Color color)
+        private static ImageChunk.ImageChunkColor? ToColorEnum(Color color)
         {
-            ImageChunkColor iColor;
+            ImageChunk.ImageChunkColor iColor;
 
             int r = color.R;
             int g = color.G;
             int b = color.B;
             if (r > (g + 50) && (r > b + 50))
             {
-                iColor = ImageChunkColor.Red;
+                iColor = ImageChunk.ImageChunkColor.Red;
             }
             else if (g > (r + 50) && g > (b + 50))
             {
-                iColor = ImageChunkColor.Green;
+                iColor = ImageChunk.ImageChunkColor.Green;
             }
             else if (Math.Abs(g - b) <100 && b - r > 50) 
             {
-                iColor = ImageChunkColor.Blue;
+                iColor = ImageChunk.ImageChunkColor.Blue;
             }
             else if (Math.Abs(r - g) < 25 && r > (b + 50))
             {
-                iColor = ImageChunkColor.Yellow;
+                iColor = ImageChunk.ImageChunkColor.Yellow;
             }
             else if (r < 30 && g < 30 && b < 30)
             {
-                iColor = ImageChunkColor.Black;
+                iColor = ImageChunk.ImageChunkColor.Black;
             }
             else
             {
@@ -158,9 +163,9 @@ namespace Smajlici
             return (int)Math.Round(result);
         }
 
-        private static ImageChunkColor? CheckColorFromSamples(Point[] samples,Bitmap bitmap)
+        private static ImageChunk.ImageChunkColor? CheckColorFromSamples(Point[] samples,Bitmap bitmap)
         {
-            ImageChunkColor? iColor = null;
+            ImageChunk.ImageChunkColor? iColor = null;
             
 
             foreach (Point t in samples)
@@ -168,7 +173,7 @@ namespace Smajlici
                 int absolutePointX = FromPercentage(t.X, bitmap.Width);
                 int absolutePointY = FromPercentage(t.Y, bitmap.Height);
                 Color c = bitmap.GetPixel(absolutePointX,absolutePointY);
-                ImageChunkColor? colorFromSamples = ToColorEnum(c);
+                ImageChunk.ImageChunkColor? colorFromSamples = ToColorEnum(c);
                 if (iColor != null && colorFromSamples != iColor)
                 {
                     return null;

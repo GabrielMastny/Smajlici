@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Smajlici
 {
-    class ImageChunkType
+    class ImageChunk
     {
         public ImageChunkColor Color { get; private set; }
         public ImageChunkFace Face { get; private set; }
         public ImagePart Neighbour { get; private set; }
 
-        public ImageChunkType(ImageChunkColor color, ImageChunkFace face)
+        public ImageChunk(ImageChunkColor color, ImageChunkFace face)
         {
             Color = color;
             Face = face;
@@ -22,6 +22,21 @@ namespace Smajlici
         public void SetNeighbour(ImagePart imagePart)
         {
             Neighbour = imagePart;
+        }
+
+        public enum ImageChunkFace
+        {
+            Eyes,
+            Smile
+        }
+
+        public enum ImageChunkColor
+        {
+            Green,
+            Red,
+            Yellow,
+            Blue,
+            Black
         }
     }
 }
