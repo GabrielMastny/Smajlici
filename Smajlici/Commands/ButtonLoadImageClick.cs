@@ -1,8 +1,10 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+using Smajlici.ViewModel;
 
 namespace Smajlici.Commands
 {
@@ -29,7 +31,7 @@ namespace Smajlici.Commands
                 var imgUri = new Uri(openFileDialog.FileName);
                 try
                 {
-                    ((ViewModel.MainWindowViewModel)parameter).LoadImage(imgUri, false);
+                    ((MainWindowViewModel)parameter).LoadImage(imgUri, false);
                 }
                 catch (Exception e)
                 {
@@ -40,7 +42,7 @@ namespace Smajlici.Commands
 
         }
         
-        private void OpenFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             BitmapDecoder decoder = BitmapDecoder.Create(new Uri( ((OpenFileDialog)sender).FileName ), BitmapCreateOptions.None, BitmapCacheOption.None);
             BitmapFrame frame = decoder.Frames[0];

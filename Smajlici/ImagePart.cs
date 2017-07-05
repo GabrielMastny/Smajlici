@@ -26,7 +26,7 @@ namespace Smajlici
         /// <param name="id">identification of ImagePart, defines initial position in whole Image, serves as metadata</param>
         /// <param name="image">stores BitmapImage of image part</param>
         /// <param name="imageChunks">array of 4 imageChunks representating what is on image, serves as metadata</param>
-        public ImagePart(int id, BitmapImage image,ImageChunk[] imageChunks)
+        public ImagePart(int id, BitmapImage image, ImageChunk[] imageChunks)
         {
             Id = id;
             Rotation = ImagePartRotation.D0;
@@ -50,9 +50,9 @@ namespace Smajlici
         public void RotateChunks()
         {
             ImageChunk tmp = _imageChunkTypes[3];
-            for (int i = 3; i >0; i--)
+            for (int i = 3; i > 0; i--)
             {
-                _imageChunkTypes[i] = _imageChunkTypes[i -1];
+                _imageChunkTypes[i] = _imageChunkTypes[i - 1];
             }
             _imageChunkTypes[0] = tmp;
         }

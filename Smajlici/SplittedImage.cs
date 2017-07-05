@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace Smajlici
 {
-    class SplittedImage
+    class SplittedImage : ICloneable
     {
         private ImagePart[] _imageParts;
 
@@ -25,17 +25,17 @@ namespace Smajlici
             RightBottom = 8
         }
 
-        public SplittedImage(Uri image,bool isDefault)
+        public SplittedImage(Uri image, bool isDefault)
         {
-            _imageParts = ImageSplitter.SplitImage(image,isDefault);
+            _imageParts = ImageSplitter.SplitImage(image, isDefault);
             if (!isDefault)
             {
                 foreach (var position in _imageParts)
                 {
-                    SetNeighbours((ImagePosittion)position.Id);
+                    InitialSetNeighbours((ImagePosittion)position.Id);
                 }
             }
-            
+
 
 
         }
@@ -47,10 +47,10 @@ namespace Smajlici
 
         public ImagePart GetImagePart(ImagePosittion position)
         {
-            return _imageParts[(int) position];
+            return _imageParts[(int)position];
         }
 
-        private void SetNeighbours(ImagePosittion position)
+        private void InitialSetNeighbours(ImagePosittion position)
         {
             int index = 0;
             ImagePart[] neighbours = new ImagePart[4];
@@ -58,7 +58,7 @@ namespace Smajlici
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    
+
                     if (index == (int)position)
                     {
                         neighbours[0] = (j == 0) ? null : _imageParts[(int)position - 1];
@@ -81,36 +81,45 @@ namespace Smajlici
             ImagePart[] neighbours = new ImagePart[4];
             for (int i = 0; i < 4; i++)
             {
-                neighbours[i] = _imageParts[(int) position].GetImageChunk((ImagePartSide) i).Neighbour;
+                neighbours[i] = _imageParts[(int)position].GetImageChunk((ImagePartSide)i).Neighbour;
             }
             return neighbours;
         }
 
         public void RotateImagePart(ImagePosittion position)
         {
-            ImagePart imagePart = _imageParts[(int) position];
+            ImagePart imagePart = _imageParts[(int)position];
             ImagePart[] neighbours = GetNeighbours(position);
 
             imagePart.RotateChunks();
 
-            for (int i = 0; i <4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                imagePart.GetImageChunk((ImagePartSide) i).SetNeighbour(neighbours[i]);
+                imagePart.GetImageChunk((ImagePartSide)i).SetNeighbour(neighbours[i]);
             }
 
-            if (imagePart.Rotation == ImagePartRotation.D270)
+            switch (imagePart.Rotation)
             {
-                imagePart.Rotation = ImagePartRotation.D0;
+                case ImagePartRotation.D0: imagePart.Rotation = ImagePartRotation.D90;
+                    break;
+                case ImagePartRotation.D90:
+                    imagePart.Rotation = ImagePartRotation.D180;
+                    break;
+                case ImagePartRotation.D180:
+                    imagePart.Rotation = ImagePartRotation.D270;
+                    break;
+                case ImagePartRotation.D270:
+                    imagePart.Rotation = ImagePartRotation.D0;
+                    break;
             }
-            else imagePart.Rotation +=90;
         }
 
         public void MoveImagePart(ImagePosittion from, ImagePosittion to)
         {
             ImagePart[] firstImageNeighbours = GetNeighbours(from);
             ImagePart[] secondImageNeighbours = GetNeighbours(to);
-            ImagePart firstImagePart = _imageParts[(int) from];
-            ImagePart secondImagePart = _imageParts[(int) to];
+            ImagePart firstImagePart = _imageParts[(int)from];
+            ImagePart secondImagePart = _imageParts[(int)to];
 
             void NotifySurroundingNeighbours(ImagePart[] surroundingNeighbours, ImagePart newNeighbour)
             {
@@ -129,11 +138,11 @@ namespace Smajlici
             NotifySurroundingNeighbours(firstImageNeighbours, secondImagePart);
             NotifySurroundingNeighbours(secondImageNeighbours, firstImagePart);
 
-            _imageParts[(int) from] = secondImagePart;
-            _imageParts[(int) to] = firstImagePart;
+            _imageParts[(int)from] = secondImagePart;
+            _imageParts[(int)to] = firstImagePart;
 
-            SetNeighbours(from);
-            SetNeighbours(to);
+            InitialSetNeighbours(from);
+            InitialSetNeighbours(to);
         }
 
         public bool CheckImageCorectness()
@@ -142,19 +151,19 @@ namespace Smajlici
             foreach (var imagePart in _imageParts)
             {
                 for (int i = 0; i < 4; i++)
-                {    
-                    ImageChunk first = imagePart.GetImageChunk((ImagePartSide) i);
+                {
+                    ImageChunk first = imagePart.GetImageChunk((ImagePartSide)i);
                     if (first.Neighbour != null)
                     {
-                        ImageChunk second = first.Neighbour.GetImageChunk(ReversedValue((ImagePartSide) i));
+                        ImageChunk second = first.Neighbour.GetImageChunk(ReversedValue((ImagePartSide)i));
 
                         result = (first.Color == second.Color && first.Face != second.Face);
-                        if (!result) 
+                        if (!result)
                         {
                             return false;
                         }
                     }
-                        
+
                 }
             }
             return true;
@@ -165,20 +174,29 @@ namespace Smajlici
             ImagePartSide result;
             switch (partSide)
             {
-                case ImagePartSide.Left: result = ImagePartSide.Right;
+                case ImagePartSide.Left:
+                    result = ImagePartSide.Right;
                     break;
-                case ImagePartSide.Top: result = ImagePartSide.Bottom;
+                case ImagePartSide.Top:
+                    result = ImagePartSide.Bottom;
                     break;
-                case ImagePartSide.Right: result = ImagePartSide.Left;
+                case ImagePartSide.Right:
+                    result = ImagePartSide.Left;
                     break;
-                case ImagePartSide.Bottom: result = ImagePartSide.Top;
+                case ImagePartSide.Bottom:
+                    result = ImagePartSide.Top;
                     break;
-                default: result = ImagePartSide.Top;
+                default:
+                    result = ImagePartSide.Top;
                     break;
             }
             return result;
         }
 
-       
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

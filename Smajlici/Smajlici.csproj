@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,11 +69,15 @@
     <Compile Include="Commands\ButtonSolveClick.cs" />
     <Compile Include="Commands\ImageClick.cs" />
     <Compile Include="Commands\ImageDoubleClick.cs" />
+    <Compile Include="Commands\ToggleButtonClick.cs" />
     <Compile Include="Converter\ButtonConverter.cs" />
+    <Compile Include="ImageSolver\ExperimentalImageSolver.cs" />
+    <Compile Include="ImageSolver\IImageSolver.cs" />
     <Compile Include="ImageChunk.cs" />
     <Compile Include="ImagePart.cs" />
-    <Compile Include="ImageSolver.cs" />
+    <Compile Include="ImageSolver\ImageSolver.cs" />
     <Compile Include="ImageSplitter.cs" />
+    <Compile Include="MyRef.cs" />
     <Compile Include="SplittedImage.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\MainWindowView.xaml.cs">

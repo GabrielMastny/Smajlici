@@ -2,13 +2,28 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Smajlici.Commands;
 using System.Windows.Media.Imaging;
+using Smajlici.Commands;
 
 namespace Smajlici.ViewModel
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
+        private Uri _uriToImage;
+        private bool _allowCheating;
+
+        /// <summary>
+        /// checkbox presets convenient splittedImage layout
+        /// </summary>
+        public bool AllowCheating
+        {
+            get { return _allowCheating; }
+            set
+            {
+                _allowCheating = value;
+                OnPropertyChanged("AllowCheating");
+            }
+        }
         /// <summary>
         /// Constructor, Loads default image
         /// </summary>
@@ -37,6 +52,34 @@ namespace Smajlici.ViewModel
                 OnPropertyChanged();
                 RefreshImage();
                 
+            }
+        }
+
+        private bool useBruteForce = true;
+        /// <summary>
+        /// defines whether to use simple Brute force or multithreading
+        /// </summary>
+        public bool UseBruteForce
+        {
+            get { return useBruteForce; }
+            set
+            {
+                useBruteForce = value;
+                OnPropertyChanged("UseBruteForce");
+            }
+        }
+        private string _toggleButtonContent = "Brute Force";
+        /// <summary>
+        /// represents text to be visible on togglebox in View
+        /// </summary>
+        public string ToggleButtonContent
+        {
+            get => _toggleButtonContent;
+            set
+            {
+                _toggleButtonContent = value;
+                UseBruteForce = !UseBruteForce;
+                OnPropertyChanged("ToggleButtonContent");
             }
         }
 
@@ -233,7 +276,7 @@ namespace Smajlici.ViewModel
         /// </summary>
         public double RMImageAngle
         {
-            get => _rTImageAngle;
+            get => _rMImageAngle;
             set
             {
                 _rMImageAngle = value;
@@ -351,6 +394,7 @@ namespace Smajlici.ViewModel
         /// <param name="isDefault">represents if image is default placeholder or users image, based on thi si decided whether to ImageParts store metadata</param>
         public void LoadImage(Uri imageUri, bool isDefault)
         {
+            _uriToImage = imageUri;
             ImageParts = new SplittedImage(imageUri, isDefault);
             if (!isDefault)
             {
@@ -362,8 +406,16 @@ namespace Smajlici.ViewModel
         /// </summary>
         public void SolveImage()
         {
-            ImageSolver imageSolver = new ImageSolver(_imageParts);
-            imageSolver.Solve();
+            IImageSolver imageSolver;
+            if (UseBruteForce)
+            {
+               imageSolver = new ImageSolver(_imageParts,_allowCheating);
+            }
+            else
+            {
+                imageSolver = new ExperimentalImageSolver(_uriToImage,_allowCheating);
+            }
+            ImageParts =  imageSolver.Solve();
             RefreshImage();
         }
 
@@ -399,7 +451,7 @@ namespace Smajlici.ViewModel
         private void PrintImagePartInfo(string elementName)
         {
             ImagePart ip = ImageParts.GetImagePart(ElementNameConv(elementName).Value);
-            Console.WriteLine($"Image ID: {ip.Id} rot: {ip.Rotation.ToString()}");
+            Console.WriteLine($"Image ID: {ip.Id} rot: {ip.Rotation}");
             if (ip.GetImageChunk(ImagePartSide.Left).Neighbour == null)
             {
                 Console.WriteLine($"left chunkColor: {ip.GetImageChunk(ImagePartSide.Left).Color} chunkFace: {ip.GetImageChunk(ImagePartSide.Left).Face} neighID: NULL");
@@ -496,6 +548,14 @@ namespace Smajlici.ViewModel
         }
 
         #region Commands
+
+        private ICommand _cmdToggleButtonClick;
+
+        public ICommand CmdToggleButtonClick
+        {
+            get => _cmdToggleButtonClick ?? (_cmdToggleButtonClick = new ToggleButtonClick());
+            set => _cmdToggleButtonClick = value;
+        }
         private ICommand _cmdLoadImage;
         public ICommand CmdLoadImage
         {

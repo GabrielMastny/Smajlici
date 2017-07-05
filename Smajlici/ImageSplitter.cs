@@ -3,9 +3,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
-using Color = System.Drawing.Color;
-using Point = System.Drawing.Point;
-
 
 namespace Smajlici
 {
@@ -39,9 +36,7 @@ namespace Smajlici
                 }
                 return splittedImage;
             }
-            else return null;
-            
-
+            return null;
         }
 
         private static BitmapImage ConvertToBitmapImage(Bitmap bitmap)
